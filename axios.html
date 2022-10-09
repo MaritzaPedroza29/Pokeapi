@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poke Api Usando Axios</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+    <script src="js/vanilla_service.js?v=1.0"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            let pokemons = await getPokemons(10);
+            console.log(pokemons);
+            console.dir(pokemons);
+                        
+            pokemons.forEach(async function(pokemon, index) {
+                let pokemonData = await getPokemonData(pokemon.url);
+                
+                //console.log(index);
+                //console.log(pokemonData);
+
+                var name = pokemonData.name;
+                var photo = pokemonData.sprites.front_default;
+
+                console.log(name);
+                console.log(photo);
+
+            });
+            
+        }, false);        
+    </script>
+    
+</body>
+</html>

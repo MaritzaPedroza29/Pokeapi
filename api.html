@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poke Api Usando Vanilla Javascript</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="estilo.css">
+
+    <style>
+        .pokemon-img {
+            height: 250px;
+            width: 250px;
+        }
+    </style>
+</head>
+
+<body>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 " id="${id}"></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12 row">
+                <div id="name" class="col-6">name</div>
+                <div id="xp" class="col-6">xp</div>
+            </div>
+            <div class="col-12" id="img">
+                <img src="" alt="">
+            </div>
+            <div class="col-12 row">
+                <div class="col-4" id="attak">
+                    ataque 
+                </div>
+                <div class="col-4" id="defens">
+                    defenza
+                </div>
+                <div class="col-4" id="speed">
+                    velocidad
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+    <body id="mi_body">
+        <div class="hero">
+            <div class="navbar">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="login.php">Salir</a></li>
+                    <img src="img/bell.svg">
+                    <img src="img/person.svg">
+                    <img src="img/menu-app.svg">
+                </ul>
+            </div>
+        </div>
+        <main class="container py-5">
+            <h1>Pokemones</h1>
+
+            <hr class="my-3">
+
+            <div id="containerdata" class="row">
+                <!-- <div class="col-sm-6 col-lg-4 mb-4">
+                <div class="card text-center">
+                    <div class="text-center w-100">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" class="pokemon-img" />
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Bulbasaur</h5>
+                        <p class="card-text">Descripcion</p>
+                    </div>
+                </div>
+            </div> -->
+            </div>
+
+        </main>
+
+        <script src="js/vanilla_service.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', async function () {
+                let pokemons = await getPokemons(200);
+                console.log(pokemons);
+                console.dir(pokemons);
+
+                setContentAllPokemons(pokemons);
+
+
+
+            }, false);
+
+            async function setContentAllPokemons(arrayPokemons) {
+                arrayPokemons.forEach(async function (pokemon, index) {
+                    let pokemonData = await getPokemonData(pokemon.url);
+
+                    let name = pokemonData.name;
+                    let id = pokemonData.id;
+                    let photo = pokemonData.sprites.front_default;
+
+                    let cardPokemon = getTemplateCardPokemon(name, photo, id);
+
+                    let containerData = document.getElementById("containerdata");
+
+                    containerData.innerHTML += cardPokemon;
+                });
+            }
+
+            /*
+            async function getContentAllPokemons(arrayPokemons) {
+                let content = null;
+                
+                arrayPokemons.forEach(async function (pokemon, index){
+                    let pokemonData = await getPokemonData(pokemon.url);
+                    
+                    let name = pokemonData.name;
+                    let photo = pokemonData.sprites.front_default;
+                    let cardPokemon = getTemplateCardPokemon(name, photo);
+                    console.log(cardPokemon);
+                    content += cardPokemon;
+                });
+                return content;
+            }
+            */
+
+            function getTemplateCardPokemon(name, photo, id) {
+                let templateCardPokemon = `
+            <div class="col-sm-6 col-lg-4 mb-4">
+                <div class="card text-center">
+                    <div class="text-center w-100">
+                        <img src="${photo}" class="pokemon-img"/>
+                    </div>
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary" onclick="showPokemon(${id})">${name}</button>
+                    </div>
+                </div>
+            </div>
+            `;
+                return templateCardPokemon;
+            }
+
+            async function showPokemon(id){
+                let url = "https://pokeapi.co/api/v2/pokemon/"+id;
+                let pokemonData = await getPokemonData(url);
+                let name=pokemonData.name;
+                document.getElementById(name).innerHTML(name);
+                $('#exampleModal').modal('show')
+                    //});
+        }
+        </script>
+
+    </body>
+
+</html>
