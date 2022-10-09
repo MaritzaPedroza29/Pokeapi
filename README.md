@@ -27,5 +27,5 @@ C:\xampp\htdocs
 y abrirlo por medio de xampp: 
 
 ```plaintext
-https://localhost/Pokeapi
+https://localhost/Pokeapi/api.html
 ```
