@@ -31,14 +31,14 @@
           <h1 class="modal-title fs-5 " id="tittle"></h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body ">
           <div class="row">
             <div class="col-12 row">
                 <div id="name" class="col-6">name</div>
                 <div id="xp" class="col-6">xp</div>
             </div>
             <div class="col-12" id="img">
-                <img src="" alt="">
+             
             </div>
             <div class="col-12 row">
                 <div class="col-4" id="attak">
@@ -54,7 +54,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -164,8 +164,16 @@
             async function showPokemon(id){
                 let url = "https://pokeapi.co/api/v2/pokemon/"+id;
                 let pokemonData = await getPokemonData(url);
-                inner("tittle","esta viendo el pokemon"+id)
-                inner("name",pokemonData.name)
+                inner("tittle","esta viendo el pokemon "+id)
+                inner("name", pokemonData.name)
+                inner("xp","experinecia: "+pokemonData.base_experience)
+                inner("img",
+                    `<center>
+                    <img src="${pokemonData.sprites.other.dream_world.front_default}" style="background-color:#F7E2D6" alt=""></center> `
+                )
+                inner("speed", "velocidad "+pokemonData.stats[5].base_stat)
+                inner("attak", "ataque "+pokemonData.stats[1].base_stat)
+                inner("defens","defenza "+pokemonData.stats[2].base_stat)
                 $('#exampleModal').modal('show')
                     //});
         }
