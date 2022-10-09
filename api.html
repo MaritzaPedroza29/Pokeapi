@@ -99,6 +99,8 @@
         <script src="js/vanilla_service.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script>
+            const inner = (id, mensaje) => document.getElementById(id).innerHTML = mensaje;
+        
             document.addEventListener('DOMContentLoaded', async function () {
                 let pokemons = await getPokemons(200);
                 console.log(pokemons);
@@ -162,11 +164,12 @@
             async function showPokemon(id){
                 let url = "https://pokeapi.co/api/v2/pokemon/"+id;
                 let pokemonData = await getPokemonData(url);
-                document.getElementById('tittle').innerHTML="estas viendo el pokemon"+id;
-                document.getElementById('name').innerHTML=(pokemonData.name);
+                inner("tittle","esta viendo el pokemon"+id)
+                inner("name",pokemonData.name)
                 $('#exampleModal').modal('show')
                     //});
         }
+ 
         </script>
 
     </body>
