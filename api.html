@@ -28,7 +28,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5 " id="${id}"></h1>
+          <h1 class="modal-title fs-5 " id="tittle"></h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -162,8 +162,8 @@
             async function showPokemon(id){
                 let url = "https://pokeapi.co/api/v2/pokemon/"+id;
                 let pokemonData = await getPokemonData(url);
-                let name=pokemonData.name;
-                document.getElementById(name).innerHTML(name);
+                document.getElementById('tittle').innerHTML="estas viendo el pokemon"+id;
+                document.getElementById('name').innerHTML=(pokemonData.name);
                 $('#exampleModal').modal('show')
                     //});
         }
